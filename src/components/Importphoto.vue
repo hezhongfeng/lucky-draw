@@ -31,7 +31,7 @@
     </el-row>
     <el-row class="photo">
       <label>已选照片</label>
-      <img v-if="value" :src="value" alt="img" :width="140" :height="140" />
+      <img v-if="value" :src="value" alt="img" :width="110" :height="160" />
       <span v-else>暂未选择</span>
     </el-row>
     <el-row>

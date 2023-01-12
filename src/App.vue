@@ -1,13 +1,13 @@
 <template>
   <div id="root">
     <header>
-      <Publicity v-show="!running" />
-      <el-button class="res" type="text" @click="showResult = true">
+      <!-- <Publicity v-show="!running" /> -->
+      <!-- <el-button class="res" type="text" @click="showResult = true">
         抽奖结果
       </el-button>
       <el-button class="con" type="text" @click="showConfig = true">
         抽奖配置
-      </el-button>
+      </el-button> -->
     </header>
     <div id="main" :class="{ mask: showRes }"></div>
     <div id="tags">
@@ -16,7 +16,7 @@
           <a
             href="javascript:void(0);"
             :style="{
-              color: '#fff',
+              color: '#fff'
             }"
           >
             {{ item.name ? item.name : item.key }}
@@ -38,29 +38,29 @@
             @click="showRes = false"
             :class="{
               numberOver:
-                !!photos.find((d) => d.id === item) ||
-                !!list.find((d) => d.key === item),
+                !!photos.find(d => d.id === item) ||
+                !!list.find(d => d.key === item)
             }"
           >
-            <span class="cont" v-if="!photos.find((d) => d.id === item)">
+            <span class="cont" v-if="!photos.find(d => d.id === item)">
               <span
-                v-if="!!list.find((d) => d.key === item)"
+                v-if="!!list.find(d => d.key === item)"
                 :style="{
-                  fontSize: '40px',
+                  fontSize: '40px'
                 }"
               >
-                {{ list.find((d) => d.key === item).name }}
+                {{ list.find(d => d.key === item).name }}
               </span>
               <span v-else>
                 {{ item }}
               </span>
             </span>
             <img
-              v-if="photos.find((d) => d.id === item)"
-              :src="photos.find((d) => d.id === item).value"
+              v-if="photos.find(d => d.id === item)"
+              :src="photos.find(d => d.id === item).value"
               alt="photo"
               :width="160"
-              :height="160"
+              :height="230"
             />
           </span>
         </div>
@@ -92,10 +92,6 @@
     />
     <Result :visible.sync="showResult"></Result>
 
-    <span class="copy-right">
-      Copyright©zhangyongfeng5350@gmail.com
-    </span>
-
     <audio
       id="audiobg"
       preload="auto"
@@ -112,7 +108,7 @@
 </template>
 <script>
 import LotteryConfig from '@/components/LotteryConfig';
-import Publicity from '@/components/Publicity';
+// import Publicity from '@/components/Publicity';
 import Tool from '@/components/Tool';
 import bgaudio from '@/assets/bg.mp3';
 import beginaudio from '@/assets/begin.mp3';
@@ -122,7 +118,7 @@ import {
   resultField,
   newLotteryField,
   conversionCategoryName,
-  listField,
+  listField
 } from '@/helper/index';
 import { luckydrawHandler } from '@/helper/algorithm';
 import Result from '@/components/Result';
@@ -130,7 +126,7 @@ import { database, DB_STORE_NAME } from '@/helper/db';
 export default {
   name: 'App',
 
-  components: { LotteryConfig, Publicity, Tool, Result },
+  components: { LotteryConfig, Tool, Result },
 
   computed: {
     resCardStyle() {
@@ -148,7 +144,7 @@ export default {
     config: {
       get() {
         return this.$store.state.config;
-      },
+      }
     },
     result: {
       get() {
@@ -156,7 +152,7 @@ export default {
       },
       set(val) {
         this.$store.commit('setResult', val);
-      },
+      }
     },
     list() {
       return this.$store.state.list;
@@ -176,13 +172,13 @@ export default {
       const nums = number >= 1500 ? 500 : this.config.number;
       const configNum = number > 1500 ? Math.floor(number / 3) : number;
       const randomShowNums = luckydrawHandler(configNum, [], nums);
-      const randomShowDatas = randomShowNums.map((item) => {
-        const listData = this.list.find((d) => d.key === item);
-        const photo = this.photos.find((d) => d.id === item);
+      const randomShowDatas = randomShowNums.map(item => {
+        const listData = this.list.find(d => d.key === item);
+        const photo = this.photos.find(d => d.id === item);
         return {
           key: item * (number > 1500 ? 3 : 1),
           name: listData ? listData.name : '',
-          photo: photo ? photo.value : '',
+          photo: photo ? photo.value : ''
         };
       });
       return randomShowDatas;
@@ -192,7 +188,7 @@ export default {
     },
     photos() {
       return this.$store.state.photos;
-    },
+    }
   },
   created() {
     const data = getData(configField);
@@ -207,7 +203,7 @@ export default {
     const newLottery = getData(newLotteryField);
     if (newLottery) {
       const config = this.config;
-      newLottery.forEach((item) => {
+      newLottery.forEach(item => {
         this.$store.commit('setNewLottery', item);
         if (!config[item.key]) {
           this.$set(config, item.key, 0);
@@ -231,7 +227,7 @@ export default {
       resArr: [],
       category: '',
       audioPlaying: false,
-      audioSrc: bgaudio,
+      audioSrc: bgaudio
     };
   },
   watch: {
@@ -241,8 +237,8 @@ export default {
         this.$nextTick(() => {
           this.reloadTagCanvas();
         });
-      },
-    },
+      }
+    }
   },
   mounted() {
     this.startTagCanvas();
@@ -282,7 +278,7 @@ export default {
       });
     },
     getPhoto() {
-      database.getAll(DB_STORE_NAME).then((res) => {
+      database.getAll(DB_STORE_NAME).then(res => {
         if (res && res.length > 0) {
           this.$store.commit('setPhotos', res);
         }
@@ -307,7 +303,7 @@ export default {
         dragControl: 1,
         textHeight: 20,
         noSelect: true,
-        lock: 'xy',
+        lock: 'xy'
       });
     },
     reloadTagCanvas() {
@@ -360,14 +356,14 @@ export default {
         }
         const oldRes = this.result[category] || [];
         const data = Object.assign({}, this.result, {
-          [category]: oldRes.concat(resArr),
+          [category]: oldRes.concat(resArr)
         });
         this.result = data;
         window.TagCanvas.SetSpeed('rootcanvas', [5, 1]);
         this.running = !this.running;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss">
@@ -454,10 +450,10 @@ export default {
   .itemres {
     background: #fff;
     width: 160px;
-    height: 160px;
+    height: 230px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    line-height: 160px;
+    line-height: 230px;
     font-weight: bold;
     margin-right: 20px;
     margin-bottom: 20px;
@@ -470,19 +466,6 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-    &.numberOver::before {
-      content: attr(data-id);
-      width: 30px;
-      height: 22px;
-      line-height: 22px;
-      background-color: #fff;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      font-size: 14px;
-      // border-radius: 50%;
-      z-index: 1;
     }
   }
 }
