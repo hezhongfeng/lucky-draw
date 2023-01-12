@@ -439,8 +439,8 @@ export default {
   text-align: center;
   p {
     color: red;
-    font-size: 50px;
-    line-height: 120px;
+    font-size: 45px;
+    line-height: 70px;
   }
   .container {
     display: flex;

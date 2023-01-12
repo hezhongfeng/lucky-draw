@@ -41,7 +41,7 @@ export function conversionCategoryName(key) {
   let name = '';
   switch (key) {
     case 'firstPrize':
-      name = '公共服务奖';
+      name = '可指定一人喝一瓶';
       break;
     default:
       break;
