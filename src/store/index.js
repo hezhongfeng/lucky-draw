@@ -14,7 +14,7 @@ export default new Vuex.Store({
     config: {
       name: '年会抽奖',
       number: 40,
-      firstPrize: 10
+      firstPrize: 1
     },
     result: {
       firstPrize: []

@@ -2,12 +2,12 @@
   <div id="root">
     <header>
       <!-- <Publicity v-show="!running" /> -->
-      <!-- <el-button class="res" type="text" @click="showResult = true">
+      <el-button class="res" type="text" @click="showResult = true">
         抽奖结果
       </el-button>
       <el-button class="con" type="text" @click="showConfig = true">
         抽奖配置
-      </el-button> -->
+      </el-button>
     </header>
     <div id="main" :class="{ mask: showRes }"></div>
     <div id="tags">
