@@ -27,7 +27,7 @@
     </div>
     <transition name="bounce">
       <div id="resbox" v-show="showRes">
-        <p @click="showRes = false">{{ categoryName }}抽奖结果：</p>
+        <p @click="showRes = false">{{ categoryName }}</p>
         <div class="container">
           <span
             v-for="item in resArr"
@@ -439,9 +439,11 @@ export default {
   text-align: center;
   p {
     color: red;
-    font-size: 50px;
+    font-size: 60px;
+    font-weight: 700;
     line-height: 70px;
     margin-bottom: 50px;
+    -webkit-text-stroke: 1px #fff;
   }
   .container {
     display: flex;
